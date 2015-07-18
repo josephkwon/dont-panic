@@ -1,9 +1,13 @@
 package coffee.chris.gopherstudios.dontpanic;
 
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class main extends Activity {
@@ -34,5 +38,12 @@ public class main extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void sendSMS(View view)
+    {
+        PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, main.class), 0);
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage("3194314821", null, "hi dude", pi, null);
     }
 }
