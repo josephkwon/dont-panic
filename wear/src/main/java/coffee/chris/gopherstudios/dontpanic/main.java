@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
 import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
 
 public class main extends Activity {
 
@@ -20,5 +22,11 @@ public class main extends Activity {
                 mTextView = (TextView) stub.findViewById(R.id.text);
             }
         });
+    }
+
+    private void clickSHIT(View view)
+    {
+        final Button b = (Button)findViewById(R.id.shitButton);
+        b.setText("Clicked");
     }
 }
