@@ -13,7 +13,7 @@ public class panic_settings extends Fragment {
                              Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_panic_settings, container, false);
         TextView textview = (TextView) view.findViewById(R.id.tabtextview);
-        textview.setText(R.string.TWO);
+        textview.setText(R.string.THREE);
         return view;
     }
 }
