@@ -4,9 +4,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ONE">ONE</string>
     <string name="TWO">TWO</string>
     <string name="THREE">THREE</string>
+
+    <string name="Name">Name</string>
+    <string name="Phone">555-555-5555</string>
+    <string name="SaveContact">Save Contact</string>
+
+    <string name="Message">Text Message</string>
+    <string name="SaveMessage">Save Message</string>
 </resources>
