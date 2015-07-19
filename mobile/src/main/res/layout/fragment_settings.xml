@@ -17,6 +17,28 @@
         android:layout_below="@+id/Name"
         android:hint="@string/Phone"
         android:inputType="phone" />
+    <EditText
+        android:id="@+id/Message"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Phone"
+        android:minLines="7"
+        android:hint="@string/Message"
+        android:inputType="text" />
+    <CheckBox
+        android:id="@+id/AudioBool"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Message"
+        android:text="@string/AudioBool"
+        android:checked="false"/>
+    <EditText
+        android:id="@+id/AudioTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AudioBool"
+        android:hint="@string/AudioTime"
+        android:inputType="text" />
     <Button
         android:id="@+id/saveContact"
         android:layout_height="wrap_content"
@@ -25,20 +47,7 @@
         android:text="@string/SaveContact"
         android:onClick="saveContact" />
 
-    <EditText
-        android:id="@+id/Message"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/saveContact"
-        android:minLines="7"
-        android:hint="@string/Message"
-        android:inputType="text" />
-    <Button
-        android:id="@+id/saveMessage"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/Message"
-        android:text="@string/SaveMessage"
-        android:onClick="saveMessage" />
+
+
 
 </RelativeLayout>

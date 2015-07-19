@@ -21,9 +21,7 @@ public class main extends Activity {
     Fragment fragmentTab2 = new settings();
     Fragment fragmentTab3 = new panic_settings();
 
-    String name = null;
-    String phone = null;
-    String message = null;
+    ContactSettings contactSettings;
 
     LocationBackend locationBackend;
 
@@ -50,43 +48,26 @@ public class main extends Activity {
 
         buildGoogleApiClient();
         locationBackend = new LocationBackend(this);
+
+        contactSettings = new ContactSettings();
     }
 
-    void setName(String n){
-        name = n;
-    }
-
-    String getName(){
-        return name;
-    }
-
-    void setPhone(String p){
-        phone = p;
-    }
-
-    String getPhone(){
-        return phone;
-    }
-
-    void setMessage(String m){
-        message = m;
-    }
-
-    String getMessage(){
-        return message;
+    ContactSettings getContactSettings(){
+        return contactSettings;
     }
 
     void sendText()
     {
-        if(getPhone() != null && getMessage() != null) {
-            PendingIntent pi = PendingIntent.getActivity(this, 0,
-                    new Intent(this, main.class), 0);
-            SmsManager sms = SmsManager.getDefault();
-            sms.sendTextMessage(getPhone(), null, getMessage(), pi, null);
-        }else{
-            Toast.makeText(this, "Make sure you set up your emergency contact information",
-                    Toast.LENGTH_LONG).show();
-        }
+        for(int i = 0; i < contactSettings.getContactListSize(); i++) {
+            if (contactSettings.getContact(i).getPhone() != null && contactSettings.getContact(i).getMessage() != null) {
+                PendingIntent pi = PendingIntent.getActivity(this, 0,
+                        new Intent(this, main.class), 0);
+                SmsManager sms = SmsManager.getDefault();
+                sms.sendTextMessage(contactSettings.getContact(i).getPhone(), null, contactSettings.getContact(i).getMessage(), pi, null);
+            } else {
+                Toast.makeText(this, "Make sure you set up your emergency contact information",
+                        Toast.LENGTH_LONG).show();
+            }
     }
 
     protected synchronized void buildGoogleApiClient() {
