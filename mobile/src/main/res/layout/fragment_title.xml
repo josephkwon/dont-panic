@@ -6,8 +6,8 @@
 
     <Button
         android:id="@+id/panicButton"
-        android:layout_height="50px"
-        android:layout_width="50px"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
         android:text="@string/PANIC"
         android:onClick="panic" />
 

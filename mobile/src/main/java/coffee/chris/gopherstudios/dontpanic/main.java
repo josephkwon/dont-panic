@@ -10,6 +10,9 @@ import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
 
 public class main extends Activity {
     ActionBar.Tab tab1, tab2, tab3;
@@ -20,6 +23,10 @@ public class main extends Activity {
     String name = null;
     String phone = null;
     String message = null;
+
+    LocationBackend locationBackend;
+
+    private GoogleApiClient mGoogleApiClient;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +46,9 @@ public class main extends Activity {
         actionBar.addTab(tab1);
         actionBar.addTab(tab2);
         actionBar.addTab(tab3);
+
+        buildGoogleApiClient();
+        locationBackend = new LocationBackend(this);
     }
 
     void setName(String n){
@@ -71,5 +81,16 @@ public class main extends Activity {
                 new Intent(this, main.class), 0);
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phoneNumber, null, message, pi, null);
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    public LocationBackend getLocationBackend()
+    {
+        return locationBackend;
     }
 }
