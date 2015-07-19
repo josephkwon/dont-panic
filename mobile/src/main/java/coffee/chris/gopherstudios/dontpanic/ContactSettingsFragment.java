@@ -41,13 +41,24 @@ public class ContactSettingsFragment extends Fragment {
         saveContactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            m_ContactSettings.addContact(
-                    nameField.toString(),
-                    phoneField.toString(),
-                    messageField.toString(),
-                    audioField.isChecked(),
-                    Integer.parseInt( audioTime.getText().toString() )
-            );
+                if(!audioTime.getText().toString().equals("")){
+                    m_ContactSettings.addContact(
+                            nameField.toString(),
+                            phoneField.toString(),
+                            messageField.toString(),
+                            audioField.isChecked(),
+                            Integer.parseInt( audioTime.getText().toString() )
+                    );
+                }else{
+                    m_ContactSettings.addContact(
+                            nameField.toString(),
+                            phoneField.toString(),
+                            messageField.toString(),
+                            audioField.isChecked(),
+                            20 *1000  //20 * 1000 milliseconds
+                    );
+                }
+
             }
         });
 
