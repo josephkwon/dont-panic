@@ -43,7 +43,7 @@
         android:id="@+id/saveContact"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_below="@+id/Phone"
+        android:layout_below="@+id/AudioTime"
         android:text="@string/SaveContact"
         android:onClick="saveContact" />
 

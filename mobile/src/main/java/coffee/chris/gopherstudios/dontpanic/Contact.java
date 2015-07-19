@@ -39,7 +39,7 @@ public class Contact implements Comparable<Contact> {
         return m_Message;
     }
 
-    public String getMessageLimit()
+    public int getMessageLimit()
     {
         return m_MessageLimit;
     }
