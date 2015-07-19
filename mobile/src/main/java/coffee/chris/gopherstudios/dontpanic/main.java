@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -75,12 +76,17 @@ public class main extends Activity {
         return message;
     }
 
-    void sendText(String phoneNumber, String message)
+    void sendText()
     {
-        PendingIntent pi = PendingIntent.getActivity(this, 0,
-                new Intent(this, main.class), 0);
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, pi, null);
+        if(getPhone() != null && getMessage() != null) {
+            PendingIntent pi = PendingIntent.getActivity(this, 0,
+                    new Intent(this, main.class), 0);
+            SmsManager sms = SmsManager.getDefault();
+            sms.sendTextMessage(getPhone(), null, getMessage(), pi, null);
+        }else{
+            Toast.makeText(this, "Make sure you set up your emergency contact information",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     protected synchronized void buildGoogleApiClient() {

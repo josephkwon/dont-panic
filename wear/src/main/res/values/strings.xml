@@ -2,4 +2,5 @@
     <string name="app_name">Dont Panic</string>
     <string name="hello_round">Hello Round World!</string>
     <string name="hello_square">Hello Square World!</string>
+    <color name="bkgnd">#FF99CCFF</color>
 </resources>

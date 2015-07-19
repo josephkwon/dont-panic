@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.WatchViewStub
+<android.support.wearable.view.BoxInsetLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/watch_view_stub"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    app:rectLayout="@layout/rect_activity_main" app:roundLayout="@layout/round_activity_main"
-    tools:context=".main" tools:deviceIds="wear"></android.support.wearable.view.WatchViewStub>
+    tools:context=".main" tools:deviceIds="wear"
+    android:padding="30dp"
+    android:background="@color/bkgnd">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_box="all">
+        <ImageButton
+            android:id="@+id/panicButton"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/panic_button" />
+    </FrameLayout>
+</android.support.wearable.view.BoxInsetLayout>
