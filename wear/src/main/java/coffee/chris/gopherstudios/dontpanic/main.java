@@ -40,6 +40,14 @@ public class main extends Activity implements
             public void run()
             {
                 while(true) {
+                    try
+                    {
+                        Thread.sleep(500);
+                    }
+                    catch(Exception e)
+                    {
+                         System.out.println(e);
+                    }
                     if (held) {
                         panicHeld();
                     }
@@ -49,7 +57,7 @@ public class main extends Activity implements
 
         uiUpdateThread.start();
 
-                PutDataMapRequest putDataMapReq = PutDataMapRequest.create(EVENTS_PANIC);
+        PutDataMapRequest putDataMapReq = PutDataMapRequest.create(EVENTS_PANIC);
         panicTime = putDataMapReq.getDataMap().getLong(PANIC_KEY);
         ((Button)findViewById(R.id.shitButton)).setText("" + panicTime);
 
@@ -61,18 +69,16 @@ public class main extends Activity implements
                 {
                     //Start ticker
                     held = true;
+                    panicTime = 0;
                     startTime = System.currentTimeMillis();
+                    animateGui();
                     return true;
                 }
                 else if (event.getAction() == MotionEvent.ACTION_UP) {
                     // Stop ticker
                     held = false;
                     panicTime = 0;
-                    PutDataMapRequest putDataMapReq = PutDataMapRequest.create(EVENTS_PANIC);
-                    putDataMapReq.getDataMap().putLong(PANIC_KEY, panicTime);
-                    PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
-                    PendingResult<DataApi.DataItemResult> pendingResult =
-                            Wearable.DataApi.putDataItem(mGoogleApiClient, putDataReq);
+                    animateGui();
                     return true;
                 }
 
@@ -81,6 +87,20 @@ public class main extends Activity implements
         };
 
         findViewById(R.id.shitButton).setOnTouchListener(toucher);
+    }
+
+    protected void animateGui() {
+        PutDataMapRequest putDataMapReq = PutDataMapRequest.create(EVENTS_PANIC);
+        putDataMapReq.getDataMap().putLong(PANIC_KEY, panicTime);
+        PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
+        PendingResult<DataApi.DataItemResult> pendingResult =
+                Wearable.DataApi.putDataItem(mGoogleApiClient, putDataReq);
+        runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+            ((Button)findViewById(R.id.shitButton)).setText("" + panicTime);
+        }
+    });
     }
 
 
@@ -113,12 +133,7 @@ public class main extends Activity implements
     private void panicHeld()
     {
         panicTime = System.currentTimeMillis() - startTime;
-        PutDataMapRequest putDataMapReq = PutDataMapRequest.create(EVENTS_PANIC);
-        putDataMapReq.getDataMap().putLong(PANIC_KEY, panicTime);
-        PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
-        PendingResult<DataApi.DataItemResult> pendingResult =
-                Wearable.DataApi.putDataItem(mGoogleApiClient, putDataReq);
-        ((Button)findViewById(R.id.shitButton)).setText("" + panicTime);
+        animateGui();
     }
 
 }
