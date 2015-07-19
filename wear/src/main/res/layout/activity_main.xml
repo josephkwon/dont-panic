@@ -16,7 +16,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:text="SHIT"
-            android:onClick=""/>
+            android:text="SHIT" />
     </FrameLayout>
 </android.support.wearable.view.BoxInsetLayout>
