@@ -2,12 +2,16 @@ package coffee.chris.gopherstudios.dontpanic;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.io.*;
 
 public class ContactSettingsFragment extends Fragment {
     EditText nameField;
@@ -37,6 +41,22 @@ public class ContactSettingsFragment extends Fragment {
         audioField = (CheckBox) view.findViewById(R.id.AudioBool);
         audioTime = (EditText) view.findViewById(R.id.AudioTime);
 
+        StringBuilder text = new StringBuilder();
+        try {
+            File sdcard = Environment.getExternalStorageDirectory();
+            File file = new File(sdcard,"testFile.txt");
+
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                text.append(line);
+                text.append('\n');
+            }
+            br.close() ;
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
         saveContactButton = (Button) view.findViewById(R.id.saveContact);
         saveContactButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +67,17 @@ public class ContactSettingsFragment extends Fragment {
                             phoneField.toString(),
                             messageField.toString(),
                             audioField.isChecked(),
-                            Integer.parseInt( audioTime.getText().toString() )
-                    );
+                    Integer.parseInt(audioTime.getText().toString()));
+
+                    String filename = "contact_settings";
+                    FileOutputStream outputStream;
+                    try {
+                        outputStream = getActivity().openFileOutput(filename, getActivity().MODE_PRIVATE);
+                        outputStream.write(m_ContactSettings.toString().getBytes());
+                        outputStream.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }else{
                     m_ContactSettings.addContact(
                             nameField.toString(),
