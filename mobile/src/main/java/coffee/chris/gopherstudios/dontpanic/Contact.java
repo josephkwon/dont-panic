@@ -48,4 +48,14 @@ public class Contact implements Comparable<Contact> {
     {
         return m_SendAudioTranscript;
     }
+
+    @Override
+    public String toString()
+    {
+        return  m_Name + " " +
+                m_PhoneNumber + " " +
+                m_Message + " " +
+                m_MessageLimit + " " +
+                m_SendAudioTranscript + "\n";
+    }
 }
