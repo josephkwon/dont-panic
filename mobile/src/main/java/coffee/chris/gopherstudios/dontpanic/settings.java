@@ -34,7 +34,7 @@ public class settings extends Fragment {
         saveContactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((main) getActivity()).getContactSettings().newContact(nameField.getText().toString(),
+                ((main) getActivity()).getContactSettings().addContact(nameField.getText().toString(),
                         phoneField.getText().toString(),
                         messageField.getText().toString(),
                         audioField.isChecked(),

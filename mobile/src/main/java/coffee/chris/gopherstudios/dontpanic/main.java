@@ -68,6 +68,7 @@ public class main extends Activity {
                 Toast.makeText(this, "Make sure you set up your emergency contact information",
                         Toast.LENGTH_LONG).show();
             }
+        }
     }
 
     protected synchronized void buildGoogleApiClient() {
