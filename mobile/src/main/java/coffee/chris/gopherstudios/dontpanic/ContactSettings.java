@@ -32,4 +32,19 @@ public class ContactSettings {
     {
         return ContactList.size();
     }
+
+    @Override
+    public String toString()
+    {
+        String returnString = "";
+
+        for(int i = 0; i > ContactList.size(); i++)
+        {
+            returnString += ContactList.get(i).toString();
+        }
+
+        return  returnString;
+    }
+
+
 }
