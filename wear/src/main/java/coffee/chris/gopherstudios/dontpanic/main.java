@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -59,7 +58,7 @@ public class main extends Activity implements
 
         PutDataMapRequest putDataMapReq = PutDataMapRequest.create(EVENTS_PANIC);
         panicTime = putDataMapReq.getDataMap().getLong(PANIC_KEY);
-        ((Button)findViewById(R.id.shitButton)).setText("" + panicTime);
+        //((ImageButton)findViewById(R.id.panicButton)).setText("" + panicTime);
 
         toucher = new View.OnTouchListener(){
 
@@ -86,7 +85,7 @@ public class main extends Activity implements
             }
         };
 
-        findViewById(R.id.shitButton).setOnTouchListener(toucher);
+        findViewById(R.id.panicButton).setOnTouchListener(toucher);
     }
 
     protected void animateGui() {
@@ -95,12 +94,12 @@ public class main extends Activity implements
         PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
         PendingResult<DataApi.DataItemResult> pendingResult =
                 Wearable.DataApi.putDataItem(mGoogleApiClient, putDataReq);
-        runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            ((Button)findViewById(R.id.shitButton)).setText("" + panicTime);
-        }
-    });
+//        runOnUiThread(new Runnable() {
+//        @Override
+//        public void run() {
+//            ((ImageButton)findViewById(R.id.panicButton));
+//        }
+//    });
     }
 
 
