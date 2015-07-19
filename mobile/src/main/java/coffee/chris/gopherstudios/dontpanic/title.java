@@ -26,132 +26,65 @@ import com.google.android.gms.wearable.Wearable;
 
 public class title extends Fragment {
 
-    private ImageButton panicButton;
-    private View.OnTouchListener toucher;
+    //private ImageButton panicButton;
+    private PanicButtonBase m_PanicButton;
+    private View.OnTouchListener m_Listener;
     private Thread uiUpdateThread;
     private boolean held = false;
 
     private String EVENTS_PANIC = "/Events/PanicFired";
     private String PANIC_KEY = "coffee.chris.gopherstudios.panic";
     private GoogleApiClient mGoogleApiClient;
-    private long panicTime, startTime = 0;
+
     TextView timeText;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState){
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_title, container, false);
 
-        panicButton = (ImageButton) view.findViewById(R.id.panicButton);
-        toucher = new View.OnTouchListener(){
+        //TODO: Replace "Click" with setting
+        m_PanicButton = PanicButtonBase.Factory("Click", view.findViewById(R.id.panicButton));
 
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if(event.getAction() == MotionEvent.ACTION_DOWN)
-                {
-                    //Start ticker
-                    held = true;
-                    panicTime = 0;
-                    startTime = System.currentTimeMillis();
-                    animateGui();
-                    return true;
-                }
-                else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    // Stop ticker
-                    held = false;
-                    panicTime = 0;
-                    animateGui();
-                    return true;
-                }
+        //panicButton = (ImageButton) view.findViewById(R.id.panicButton);
 
-                return false;
+        m_Listener = new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                return m_PanicButton.analyzePanic(v, event);
             }
+
         };
 
-        view.findViewById(R.id.panicButton).setOnTouchListener(toucher);
+        view.findViewById(R.id.panicButton).setOnTouchListener(m_Listener);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addApi(Wearable.API)
-                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-                    @Override
-                    public void onConnected(Bundle b) {
-                        Wearable.DataApi.addListener(mGoogleApiClient, new DataApi.DataListener() {
-                            public void onDataChanged(DataEventBuffer d) {
-                                for (DataEvent event : d) {
-                                    if (event.getType() == DataEvent.TYPE_CHANGED) {
-                                        // DataItem changed
-                                        DataItem item = event.getDataItem();
-                                        if (item.getUri().getPath().compareTo(EVENTS_PANIC) == 0) {
-                                            DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
-                                            updateStatus(dataMap.getLong(PANIC_KEY));
-                                        }
-                                    } else if (event.getType() == DataEvent.TYPE_DELETED) {
-                                        // DataItem deleted
-                                    }
-                                }
-                            }
+        timeText = ((TextView) view.findViewById(R.id.mTextView));
+        timeText.setText("");
 
-                        });
-                        PutDataMapRequest pdmr = PutDataMapRequest.create(EVENTS_PANIC);
-                        PutDataRequest pdr = pdmr.asPutDataRequest();
-                        PendingResult<DataApi.DataItemResult> pr = Wearable.DataApi.putDataItem(mGoogleApiClient, pdr);
-                        panicTime = pdmr.getDataMap().getLong(PANIC_KEY);
-                    }
-
-                    public void onConnectionSuspended(int i) {
-
-                    }
-
-                })
-                .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-
-                    public void onConnectionFailed(ConnectionResult r) {
-
-                    }
-                })
-                .build();
-        timeText = ((TextView)view.findViewById(R.id.mTextView));
-        timeText.setText("" + panicTime);
-
-        uiUpdateThread = new Thread(new Runnable(){
-            public void run()
-            {
-                while(true) {
-                    try
-                    {
-                        Thread.sleep(500);
-                    }
-                    catch(Exception e)
-                    {
-                    }
-                    if (held) {
-                        panicHeld();
-                    }
-                }
-            }
-        });
-
-        uiUpdateThread.start();
+//        uiUpdateThread = new Thread(new Runnable(){
+//            public void run()
+//            {
+//                while(true) {
+//                    try
+//                    {
+//                        Thread.sleep(500);
+//                    }
+//                    catch(Exception e)
+//                    {
+//                    }
+//                }
+//            }
+//        });
+//
+//        uiUpdateThread.start();
 
         return view;
     }
 
-    private void sendText()
-    {
+    private void sendText() {
         ((main) getActivity()).sendText();
     }
-
-    private void updateStatus(final long i) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                timeText.setText("" + i);
-                if (((main) getActivity()).mPanicConfig.update(i)) {
-                    sendText();
-                }
-            }
-        });
-    }
-
+}
+/*
     @Override
     public void onResume() {
         super.onStart();
@@ -159,10 +92,9 @@ public class title extends Fragment {
     }
 
     protected void animateGui() {
-        updateStatus(panicTime);
-        if (held) {
+        String time = "";
+        timeText.setText( time + System.currentTimeMillis() );
 
-        }
 //        PutDataMapRequest putDataMapReq = PutDataMapRequest.create(EVENTS_PANIC);
 //        putDataMapReq.getDataMap().putLong(PANIC_KEY, panicTime);
 //        PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
@@ -181,10 +113,4 @@ public class title extends Fragment {
         super.onPause();
         mGoogleApiClient.disconnect();
     }
-
-    private void panicHeld()
-    {
-        panicTime = System.currentTimeMillis() - startTime;
-        animateGui();
-    }
-}
+}*/

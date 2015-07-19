@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-public class settings extends Fragment {
+public class ContactSettingsFragment extends Fragment {
     EditText nameField;
     EditText phoneField;
     EditText messageField;
@@ -18,6 +18,14 @@ public class settings extends Fragment {
 
     Button saveContactButton;
 
+    ContactSettings m_ContactSettings;
+
+    public static final ContactSettingsFragment newInstance( ContactSettings a_ContactSettings )
+    {
+        ContactSettingsFragment f = new ContactSettingsFragment();
+        f.m_ContactSettings = a_ContactSettings;
+        return f;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,16 +37,17 @@ public class settings extends Fragment {
         audioField = (CheckBox) view.findViewById(R.id.AudioBool);
         audioTime = (EditText) view.findViewById(R.id.AudioTime);
 
-
         saveContactButton = (Button) view.findViewById(R.id.saveContact);
         saveContactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((main) getActivity()).getContactSettings().newContact(nameField.getText().toString(),
-                        phoneField.getText().toString(),
-                        messageField.getText().toString(),
-                        audioField.isChecked(),
-                        Integer.parseInt(audioTime.getText().toString()));
+            m_ContactSettings.addContact(
+                    nameField.toString(),
+                    phoneField.toString(),
+                    messageField.toString(),
+                    audioField.isChecked(),
+                    Integer.parseInt( audioTime.getText().toString() )
+            );
             }
         });
 

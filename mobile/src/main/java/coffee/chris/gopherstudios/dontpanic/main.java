@@ -7,8 +7,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsManager;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -16,17 +14,17 @@ import com.google.android.gms.location.LocationServices;
 
 
 public class main extends Activity {
-    ActionBar.Tab tab1, tab2, tab3;
-    Fragment fragmentTab1 = new title();
-    Fragment fragmentTab2 = new settings();
-    Fragment fragmentTab3 = new panic_settings();
+    private ActionBar.Tab tab1, tab2, tab3;
 
-    ContactSettings contactSettings;
+    private Fragment fragmentTab1, fragmentTab2, fragmentTab3;
 
-    PanicConfig mPanicConfig;
+    private ContactSettings contactSettings;
 
-    LocationBackend locationBackend;
+    private PanicConfig mPanicConfig;
 
+    private LocationBackend locationBackend;
+
+    //TODO: Possibly move to LocationBackend/remove?
     private GoogleApiClient mGoogleApiClient;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +35,19 @@ public class main extends Activity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         tab1 = actionBar.newTab().setText("Main");
-        tab2 = actionBar.newTab().setText("Settings");
+        tab2 = actionBar.newTab().setText("Manage Contacts");
         tab3 = actionBar.newTab().setText("Panic Settings");
+
+        //Load settings
+        //TODO: Load Panic Button Settings
+        contactSettings = new ContactSettings();
+
+        //Initialize Settings
+        fragmentTab2 = ContactSettingsFragment.newInstance( contactSettings );
+        fragmentTab3 = new panic_settings(  ); //TODO: Add Panic settings to arg list
+
+        //Initialize Button
+        fragmentTab1 = new title();
 
         tab1.setTabListener(new MyTabListener(fragmentTab1));
         tab2.setTabListener(new MyTabListener(fragmentTab2));
@@ -51,7 +60,7 @@ public class main extends Activity {
         buildGoogleApiClient();
         locationBackend = new LocationBackend(this);
 
-        contactSettings = new ContactSettings();
+
 
         mPanicConfig = new PressPanicConfig();
     }
@@ -60,17 +69,23 @@ public class main extends Activity {
         return contactSettings;
     }
 
-    void sendText() {
-        for (int i = 0; i < contactSettings.getContactListSize(); i++) {
-            if (contactSettings.getContact(i).getPhone() != null && contactSettings.getContact(i).getMessage() != null) {
-                PendingIntent pi = PendingIntent.getActivity(this, 0,
-                        new Intent(this, main.class), 0);
-                SmsManager sms = SmsManager.getDefault();
-                sms.sendTextMessage(contactSettings.getContact(i).getPhone(), null, contactSettings.getContact(i).getMessage(), pi, null);
-            } else {
-                Toast.makeText(this, "Make sure you set up your emergency contact information",
-                        Toast.LENGTH_LONG).show();
+    void sendText()
+    {
+        if(contactSettings.getContactListSize() != 0) {
+            for (int i = 0; i < contactSettings.getContactListSize(); i++) {
+                if (contactSettings.getContact(i).getPhone() != null && contactSettings.getContact(i).getMessage() != null) {
+                    PendingIntent pi = PendingIntent.getActivity(this, 0,
+                            new Intent(this, main.class), 0);
+                    SmsManager sms = SmsManager.getDefault();
+                    sms.sendTextMessage(contactSettings.getContact(i).getPhone(), null, contactSettings.getContact(i).getMessage(), pi, null);
+                } else {
+                    Toast.makeText(this, "Make sure you set up your emergency contact information",
+                            Toast.LENGTH_LONG).show();
+                }
             }
+        }else{
+            Toast.makeText(this, "Make sure you set up your emergency contact information",
+                    Toast.LENGTH_LONG).show();
         }
     }
 

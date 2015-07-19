@@ -9,6 +9,11 @@ import java.util.Collections;
 public class ContactSettings {
     private ArrayList<Contact> ContactList;
 
+    public ContactSettings()
+    {
+        ContactList = new ArrayList<Contact>();
+    }
+
     public void addContact(String a_Name, String a_PhoneNumber, String a_Message, boolean a_SendAudio, int a_MessageLimit)
     {
         Contact contact = new Contact(a_Name, a_PhoneNumber, a_Message, a_MessageLimit, a_SendAudio);
