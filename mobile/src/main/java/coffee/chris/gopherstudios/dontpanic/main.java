@@ -44,10 +44,10 @@ public class main extends Activity {
 
         //Initialize Settings
         fragmentTab2 = ContactSettingsFragment.newInstance( contactSettings );
-        fragmentTab3 = new panic_settings(  ); //TODO: Add Panic settings to arg list
+        fragmentTab3 = panic_settings.newInstance(  ); //TODO: Add Panic settings to arg list
 
         //Initialize Button
-        fragmentTab1 = new title();
+        fragmentTab1 = title.newInstance();
 
         tab1.setTabListener(new MyTabListener(fragmentTab1));
         tab2.setTabListener(new MyTabListener(fragmentTab2));
@@ -58,9 +58,8 @@ public class main extends Activity {
         actionBar.addTab(tab3);
 
         buildGoogleApiClient();
+
         locationBackend = new LocationBackend(this);
-
-
 
         mPanicConfig = new PressPanicConfig();
     }

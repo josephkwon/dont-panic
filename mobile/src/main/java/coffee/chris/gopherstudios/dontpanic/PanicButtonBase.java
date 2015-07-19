@@ -3,6 +3,7 @@ package coffee.chris.gopherstudios.dontpanic;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 /**
  * Created by Chris on 7/19/2015.
@@ -10,7 +11,7 @@ import android.widget.ImageButton;
 public abstract class PanicButtonBase {
 
     static boolean m_Valid;
-    //static View m_View;
+    static View m_View;
     static ImageButton m_ImageButton;
 
 
@@ -27,7 +28,7 @@ public abstract class PanicButtonBase {
         {
             //TODO: add additional buttons
         case "Click":
-            returnButton = new ClickPanicButton();
+            returnButton = new ClickPanicButton( );
             break;
 //        case "Hold":
 //            break;
@@ -38,7 +39,7 @@ public abstract class PanicButtonBase {
             returnButton.m_Valid = false;
         }
 
-        //returnButton.m_View = a_View;
+        returnButton.m_View = a_View;
 
         returnButton.m_ImageButton = (ImageButton) a_View.findViewById(R.id.panicButton);
 
@@ -52,11 +53,12 @@ public abstract class PanicButtonBase {
 
     public void panic()
     {
-        //TODO: Panic
+        TextView textView = (TextView)m_View.findViewById(R.id.mTextView);
+        textView.setText("Triggered");
     }
 
     //insert panic logic here
     //return true if panic() was called
-    public abstract boolean analyzePanic( View v, MotionEvent event );
+    public abstract boolean analyzePanic( MotionEvent event );
 
 }

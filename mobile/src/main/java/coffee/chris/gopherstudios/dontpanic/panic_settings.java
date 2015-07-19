@@ -8,6 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class panic_settings extends Fragment {
+
+    public static final panic_settings newInstance( )
+    {
+        panic_settings f = new panic_settings();
+        return f;
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {

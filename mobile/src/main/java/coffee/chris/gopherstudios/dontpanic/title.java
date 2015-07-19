@@ -29,8 +29,6 @@ public class title extends Fragment {
     //private ImageButton panicButton;
     private PanicButtonBase m_PanicButton;
     private View.OnTouchListener m_Listener;
-    private Thread uiUpdateThread;
-    private boolean held = false;
 
     private String EVENTS_PANIC = "/Events/PanicFired";
     private String PANIC_KEY = "coffee.chris.gopherstudios.panic";
@@ -38,19 +36,25 @@ public class title extends Fragment {
 
     TextView timeText;
 
+    public static final title newInstance( )
+    {
+        title f = new title();
+        return f;
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_title, container, false);
 
         //TODO: Replace "Click" with setting
-        m_PanicButton = PanicButtonBase.Factory("Click", view.findViewById(R.id.panicButton));
+        m_PanicButton = PanicButtonBase.Factory("Click", view);
 
         //panicButton = (ImageButton) view.findViewById(R.id.panicButton);
 
         m_Listener = new View.OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
-                return m_PanicButton.analyzePanic(v, event);
+                return m_PanicButton.analyzePanic(event);
             }
 
         };
