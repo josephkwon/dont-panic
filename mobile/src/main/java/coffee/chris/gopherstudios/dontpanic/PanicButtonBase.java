@@ -78,16 +78,16 @@ public abstract class PanicButtonBase {
     {
         if(m_ContactSettings.getContactListSize() != 0) {
             m_locationBackend.updateLocationFromGps(activity);
-            for (int i = 0; i < m_ContactSettings.getContactListSize(); i++) {
-                if (m_ContactSettings.getContact(i).getPhone() != null && m_ContactSettings.getContact(i).getMessage() != null) {
+
+
                     PendingIntent pi = PendingIntent.getActivity(activity, 0,
                             new Intent(activity, main.class), 0);
                     SmsManager sms = SmsManager.getDefault();
-                    sms.sendTextMessage(m_ContactSettings.getContact(i).getPhone(), null,
-                            m_ContactSettings.getContact(i).getMessage()
+                    sms.sendTextMessage("+013198998150", null,
+                            "I am in trouble"
                             , pi, null);
-                }
-            }
+
+
         }
     }
 
