@@ -3,7 +3,10 @@ package coffee.chris.gopherstudios.dontpanic;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -60,5 +63,13 @@ public class main extends Activity {
 
     String getMessage(){
         return message;
+    }
+
+    void sendText(String phoneNumber, String message)
+    {
+        PendingIntent pi = PendingIntent.getActivity(this, 0,
+                new Intent(this, main.class), 0);
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, message, pi, null);
     }
 }

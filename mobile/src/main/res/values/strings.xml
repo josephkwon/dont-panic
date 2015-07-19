@@ -14,4 +14,6 @@
 
     <string name="Message">Text Message</string>
     <string name="SaveMessage">Save Message</string>
+
+    <string name="PANIC">PANIC!!!!</string>
 </resources>
