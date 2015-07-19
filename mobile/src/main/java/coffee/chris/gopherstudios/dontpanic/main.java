@@ -6,12 +6,15 @@ import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+
+import java.util.ArrayList;
 
 
 public class main extends Activity {
@@ -25,6 +28,9 @@ public class main extends Activity {
     String message = null;
 
     LocationBackend locationBackend;
+    SpeechBackend speechBackend;
+
+    private final int REQ_CODE_SPEECH_INPUT = 100;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -93,4 +99,28 @@ public class main extends Activity {
     {
         return locationBackend;
     }
+
+    public SpeechBackend getSpeechBackend()
+    {
+        return speechBackend;
+    }
+
+    /**
+     * Receiving speech input
+     * */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+                    speechBackend.analyzeSpeech(data);
+                }
+                break;
+            }
+
+        }
+    }
 }
+
