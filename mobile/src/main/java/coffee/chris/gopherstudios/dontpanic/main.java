@@ -23,6 +23,8 @@ public class main extends Activity {
 
     ContactSettings contactSettings;
 
+    PanicConfig mPanicConfig;
+
     LocationBackend locationBackend;
 
     private GoogleApiClient mGoogleApiClient;
@@ -50,15 +52,16 @@ public class main extends Activity {
         locationBackend = new LocationBackend(this);
 
         contactSettings = new ContactSettings();
+
+        mPanicConfig = new PressPanicConfig();
     }
 
     ContactSettings getContactSettings(){
         return contactSettings;
     }
 
-    void sendText()
-    {
-        for(int i = 0; i < contactSettings.getContactListSize(); i++) {
+    void sendText() {
+        for (int i = 0; i < contactSettings.getContactListSize(); i++) {
             if (contactSettings.getContact(i).getPhone() != null && contactSettings.getContact(i).getMessage() != null) {
                 PendingIntent pi = PendingIntent.getActivity(this, 0,
                         new Intent(this, main.class), 0);
@@ -68,6 +71,7 @@ public class main extends Activity {
                 Toast.makeText(this, "Make sure you set up your emergency contact information",
                         Toast.LENGTH_LONG).show();
             }
+        }
     }
 
     protected synchronized void buildGoogleApiClient() {

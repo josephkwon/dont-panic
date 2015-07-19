@@ -145,7 +145,7 @@ public class title extends Fragment {
             @Override
             public void run() {
                 timeText.setText("" + i);
-                if (((main) getActivity()).mPanicC.update(i, false)) {
+                if (((main) getActivity()).mPanicConfig.update(i)) {
                     sendText();
                 }
             }
