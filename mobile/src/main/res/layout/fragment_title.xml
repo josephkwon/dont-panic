@@ -13,12 +13,18 @@
         android:id="@+id/mTextView"
         android:paddingTop="30dp"
         android:layout_gravity="center_horizontal"/>
-
-    <Button
-        android:id="@+id/panicButton"
-        android:layout_height="match_parent"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:text="@string/PANIC"
-        android:onClick="panic" />
-
+        android:layout_height="match_parent"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="120dp"
+        android:paddingBottom="80dp">
+    <ImageButton
+        android:id="@+id/panicButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/panic_button" />
+    </FrameLayout>
 </LinearLayout>

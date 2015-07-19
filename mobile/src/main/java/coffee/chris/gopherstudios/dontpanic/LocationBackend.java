@@ -62,7 +62,7 @@ public class LocationBackend implements LocationListener {
             address = null;
         }
 
-        if(!address.isEmpty() && address.get(0).getMaxAddressLineIndex() > 2) {
+        if(address != null && !address.isEmpty() && address.get(0).getMaxAddressLineIndex() > 2) {
             for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
                 mAddress += address.get(0).getAddressLine(i);
                 mAddress += "\n";
