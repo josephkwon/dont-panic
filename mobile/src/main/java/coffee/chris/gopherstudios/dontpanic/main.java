@@ -14,6 +14,10 @@ public class main extends Activity {
     Fragment fragmentTab2 = new settings();
     Fragment fragmentTab3 = new panic_settings();
 
+    String name = null;
+    String phone = null;
+    String message = null;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -32,5 +36,29 @@ public class main extends Activity {
         actionBar.addTab(tab1);
         actionBar.addTab(tab2);
         actionBar.addTab(tab3);
+    }
+
+    void setName(String n){
+        name = n;
+    }
+
+    String getName(){
+        return name;
+    }
+
+    void setPhone(String p){
+        phone = p;
+    }
+
+    String getPhone(){
+        return phone;
+    }
+
+    void setMessage(String m){
+        message = m;
+    }
+
+    String getMessage(){
+        return message;
     }
 }
