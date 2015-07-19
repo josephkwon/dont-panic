@@ -58,14 +58,16 @@ public class main extends Activity {
 
     void sendText()
     {
-        if(contactSettings.getContact().getPhone() != null && contactSettings.getContact().getMessage() != null) {
-            PendingIntent pi = PendingIntent.getActivity(this, 0,
-                    new Intent(this, main.class), 0);
-            SmsManager sms = SmsManager.getDefault();
-            sms.sendTextMessage(contactSettings.getContact().getPhone(), null, contactSettings.getContact().getMessage(), pi, null);
-        }else{
-            Toast.makeText(this, "Make sure you set up your emergency contact information",
-                    Toast.LENGTH_LONG).show();
+        for(int i = 0; i < contactSettings.getContactListSize(); i++) {
+            if (contactSettings.getContact(i).getPhone() != null && contactSettings.getContact(i).getMessage() != null) {
+                PendingIntent pi = PendingIntent.getActivity(this, 0,
+                        new Intent(this, main.class), 0);
+                SmsManager sms = SmsManager.getDefault();
+                sms.sendTextMessage(contactSettings.getContact(i).getPhone(), null, contactSettings.getContact(i).getMessage(), pi, null);
+            } else {
+                Toast.makeText(this, "Make sure you set up your emergency contact information",
+                        Toast.LENGTH_LONG).show();
+            }
         }
     }
 
