@@ -47,7 +47,7 @@ public class main extends Activity {
         fragmentTab3 = panic_settings.newInstance(  ); //TODO: Add Panic settings to arg list
 
         //Initialize Button
-        fragmentTab1 = title.newInstance();
+        fragmentTab1 = title.newInstance(this, mGoogleApiClient);
 
         tab1.setTabListener(new MyTabListener(fragmentTab1));
         tab2.setTabListener(new MyTabListener(fragmentTab2));
@@ -68,7 +68,7 @@ public class main extends Activity {
         return contactSettings;
     }
 
-    void sendText()
+    public void sendText()
     {
         if(contactSettings.getContactListSize() != 0) {
             for (int i = 0; i < contactSettings.getContactListSize(); i++) {

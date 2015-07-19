@@ -57,7 +57,7 @@ public class LocationBackend implements LocationListener {
         List<Address> address;
 
         try {
-            address = geocoder.getFromLocation(mLatitude, mLongitute, 1);
+            address = geocoder.getFromLocation(38.923940, -94.730303, 1);
         } catch (IOException ioException) {
             address = null;
         }

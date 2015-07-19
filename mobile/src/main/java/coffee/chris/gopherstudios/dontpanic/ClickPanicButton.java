@@ -1,5 +1,6 @@
 package coffee.chris.gopherstudios.dontpanic;
 
+import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -19,11 +20,12 @@ public class ClickPanicButton extends PanicButtonBase{
     }
 
 
-    @Override
-    public boolean analyzePanic( MotionEvent event)
+
+
+    public boolean analyzePanic( MotionEvent event, Context activity)
     {
         if(event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_UP) {
-            panic();
+            panic(activity);
             return true;
         }
 

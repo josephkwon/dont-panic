@@ -29,16 +29,21 @@ public class title extends Fragment {
     //private ImageButton panicButton;
     private PanicButtonBase m_PanicButton;
     private View.OnTouchListener m_Listener;
+    private GoogleApiClient m_GoogleApiClient;
 
     private String EVENTS_PANIC = "/Events/PanicFired";
     private String PANIC_KEY = "coffee.chris.gopherstudios.panic";
     private GoogleApiClient mGoogleApiClient;
+    private ContactSettings m_ContactSettings;
 
     TextView timeText;
 
-    public static final title newInstance( )
+    public static final title newInstance( main a_main, GoogleApiClient a_GoogleApiClient)
     {
         title f = new title();
+        f.setGoogleApi(a_GoogleApiClient);
+        f.setContactSettings( a_main.getContactSettings());
+
         return f;
     }
 
@@ -47,16 +52,15 @@ public class title extends Fragment {
         View view = inflater.inflate(R.layout.fragment_title, container, false);
 
         //TODO: Replace "Click" with setting
-        m_PanicButton = PanicButtonBase.Factory("Click", view);
+        m_PanicButton = PanicButtonBase.Factory("Click", view, m_GoogleApiClient, m_ContactSettings,  ((main)getActivity()).getLocationBackend());
 
         //panicButton = (ImageButton) view.findViewById(R.id.panicButton);
 
         m_Listener = new View.OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
-                return m_PanicButton.analyzePanic(event);
+                return m_PanicButton.analyzePanic(event, getActivity());
             }
-
         };
 
         view.findViewById(R.id.panicButton).setOnTouchListener(m_Listener);
@@ -84,9 +88,16 @@ public class title extends Fragment {
         return view;
     }
 
-    private void sendText() {
-        ((main) getActivity()).sendText();
+    public void setGoogleApi(GoogleApiClient a_GoogleApiClient)
+    {
+        m_GoogleApiClient = a_GoogleApiClient;
     }
+
+    public void setContactSettings(ContactSettings a_ContactSettings)
+    {
+        m_ContactSettings = a_ContactSettings;
+    }
+
 }
 /*
     @Override
