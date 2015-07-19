@@ -6,17 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
-
 
 public class settings extends Fragment {
     EditText nameField;
     EditText phoneField;
-    Button saveContactButton;
-
     EditText messageField;
-    Button saveMessageButton;
+    CheckBox audioField;
+    EditText audioTime;
+
+    Button saveContactButton;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,21 +25,20 @@ public class settings extends Fragment {
 
         nameField = (EditText) view.findViewById(R.id.Name);
         phoneField = (EditText) view.findViewById(R.id.Phone);
+        messageField = (EditText) view.findViewById(R.id.Message);
+        audioField = (CheckBox) view.findViewById(R.id.AudioBool);
+        audioTime = (EditText) view.findViewById(R.id.AudioTime);
+
+
         saveContactButton = (Button) view.findViewById(R.id.saveContact);
         saveContactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((main) getActivity()).setName(nameField.getText().toString());
-                ((main) getActivity()).setPhone(phoneField.getText().toString());
-            }
-        });
-
-        messageField = (EditText) view.findViewById(R.id.Message);
-        saveMessageButton = (Button) view.findViewById(R.id.saveMessage);
-        saveMessageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((main) getActivity()).setMessage(messageField.getText().toString());
+                ((main) getActivity()).getContactSettings().newContact(nameField.getText().toString(),
+                        phoneField.getText().toString(),
+                        messageField.getText().toString(),
+                        audioField.isChecked(),
+                        Integer.parseInt(audioTime.getText().toString()));
             }
         });
 

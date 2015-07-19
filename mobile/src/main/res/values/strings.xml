@@ -10,10 +10,13 @@
 
     <string name="Name">Name</string>
     <string name="Phone">555-555-5555</string>
+    <string name="Message">Text Message</string>
+    <string name="AudioBool">Send Audio Transcript</string>
+    <string name="AudioTime">Seconds to Record</string>
+
     <string name="SaveContact">Save Contact</string>
 
-    <string name="Message">Text Message</string>
-    <string name="SaveMessage">Save Message</string>
+   g>
 
     <string name="PANIC">PANIC!!!!</string>
 </resources>
